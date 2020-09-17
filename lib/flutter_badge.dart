@@ -7,6 +7,8 @@ import 'package:flutter_badged/badge_positioned.dart';
 /// [FlutterBadge] class is needed to show some information about count
 class FlutterBadge extends StatefulWidget {
   final int itemCount;
+  final String title;
+  final TextStyle style;
   final Color badgeColor;
   final Color badgeTextColor;
   final Widget icon;
@@ -27,17 +29,18 @@ class FlutterBadge extends StatefulWidget {
   ///[contentPadding] is optional, default - 5.0 for all sides
   FlutterBadge(
       {Key key,
-      @required this.itemCount,
+      this.itemCount,
       @required this.icon,
+      this.title,
       this.hideZeroCount: true,
       this.badgeColor = Colors.red,
       this.badgeTextColor: Colors.white,
       this.borderRadius = 0.0,
       this.position,
+      this.style,
       this.contentPadding = const EdgeInsets.all(5.0),
       this.textSize = 12.0})
-      : assert(itemCount >= 0),
-        assert(borderRadius != null),
+      : assert(borderRadius != null),
         assert(badgeColor != null),
         assert(badgeTextColor != null),
         assert(contentPadding != null),
@@ -55,9 +58,40 @@ class FlutterBadge extends StatefulWidget {
 class FlutterBadgeState extends State<FlutterBadge> {
   @override
   Widget build(BuildContext context) {
-    if (widget.hideZeroCount && widget.itemCount == 0) {
+    if (widget.title != null) {
+      return Center(
+        child: Stack(
+          overflow: Overflow.visible,
+          children: [
+            widget.icon,
+            BadgePositioned(
+              position: widget.position ?? BadgePosition.topRight(),
+              child: Material(
+                  type: MaterialType.circle,
+                  elevation: 2.0,
+                  shape: null,
+                  color: widget.badgeColor,
+                  child: Padding(
+                    padding: widget.contentPadding,
+                    child: Text(
+                      widget.title,
+                      style: widget.style ?? TextStyle(
+                        fontSize: widget.textSize,
+                        color: widget.badgeTextColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      );
+    }
+
+    if (widget.hideZeroCount) {
       return widget.icon;
     }
+
     RoundedRectangleBorder border = widget.itemCount < 10
         ? null
         : RoundedRectangleBorder(
