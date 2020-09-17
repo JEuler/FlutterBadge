@@ -13,6 +13,7 @@ class FlutterBadge extends StatefulWidget {
   final Color badgeTextColor;
   final Widget icon;
   final bool hideZeroCount;
+  final double size;
   final double textSize;
   final double borderRadius;
   final BadgePosition position;
@@ -37,6 +38,7 @@ class FlutterBadge extends StatefulWidget {
       this.badgeTextColor: Colors.white,
       this.borderRadius = 0.0,
       this.position,
+      this.size = 16.0,
       this.style,
       this.contentPadding = const EdgeInsets.all(5.0),
       this.textSize = 12.0})
@@ -71,16 +73,20 @@ class FlutterBadgeState extends State<FlutterBadge> {
                   elevation: 0.0,
                   shape: null,
                   color: widget.badgeColor,
-                  child: Padding(
-                    padding: widget.contentPadding,
-                    child: Text(
-                      widget.title,
-                      style: widget.style ??
-                          TextStyle(
-                            fontSize: widget.textSize,
-                            color: widget.badgeTextColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  child: SizedBox(
+                    width: widget.size,
+                    height: widget.size,
+                    child: Padding(
+                      padding: widget.contentPadding,
+                      child: Text(
+                        widget.title,
+                        style: widget.style ??
+                            TextStyle(
+                              fontSize: widget.textSize,
+                              color: widget.badgeTextColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
                     ),
                   )),
             ),
