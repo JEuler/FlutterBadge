@@ -78,14 +78,16 @@ class FlutterBadgeState extends State<FlutterBadge> {
                     height: widget.size,
                     child: Padding(
                       padding: widget.contentPadding,
-                      child: Text(
-                        widget.title,
-                        style: widget.style ??
-                            TextStyle(
-                              fontSize: widget.textSize,
-                              color: widget.badgeTextColor,
-                              fontWeight: FontWeight.bold,
-                            ),
+                      child: Center(
+                        child: Text(
+                          widget.title,
+                          style: widget.style ??
+                              TextStyle(
+                                fontSize: widget.textSize,
+                                color: widget.badgeTextColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
                       ),
                     ),
                   )),
