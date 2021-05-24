@@ -6,9 +6,9 @@ import 'package:flutter_badged/badge_positioned.dart';
 
 /// [FlutterBadge] class is needed to show some information about count
 class FlutterBadge extends StatefulWidget {
-  final int itemCount;
-  final String title;
-  final TextStyle style;
+  final int? itemCount;
+  final String? title;
+  final TextStyle? style;
   final Color badgeColor;
   final Color badgeTextColor;
   final Widget icon;
@@ -16,7 +16,7 @@ class FlutterBadge extends StatefulWidget {
   final double size;
   final double textSize;
   final double borderRadius;
-  final BadgePosition position;
+  final BadgePosition? position;
   final EdgeInsets contentPadding;
 
   ///Constructor
@@ -29,9 +29,9 @@ class FlutterBadge extends StatefulWidget {
   ///[textSize] is optional, default - 12.0
   ///[contentPadding] is optional, default - 5.0 for all sides
   FlutterBadge(
-      {Key key,
+      {Key? key,
       this.itemCount,
-      @required this.icon,
+      required this.icon,
       this.title,
       this.hideZeroCount: true,
       this.badgeColor = Colors.red,
@@ -42,14 +42,7 @@ class FlutterBadge extends StatefulWidget {
       this.style,
       this.contentPadding = const EdgeInsets.all(5.0),
       this.textSize = 12.0})
-      : assert(borderRadius != null),
-        assert(badgeColor != null),
-        assert(badgeTextColor != null),
-        assert(contentPadding != null),
-        assert(icon != null),
-        assert(borderRadius != null),
-        assert(textSize != null),
-        super(key: key);
+      : super(key: key);
 
   @override
   FlutterBadgeState createState() {
@@ -63,7 +56,7 @@ class FlutterBadgeState extends State<FlutterBadge> {
     if (widget.title != null) {
       return Center(
         child: Stack(
-          overflow: Overflow.visible,
+          clipBehavior: Clip.none,
           children: [
             widget.icon,
             BadgePositioned(
@@ -80,7 +73,7 @@ class FlutterBadgeState extends State<FlutterBadge> {
                       padding: widget.contentPadding,
                       child: Center(
                         child: Text(
-                          widget.title,
+                          widget.title!,
                           style: widget.style ??
                               TextStyle(
                                 fontSize: widget.textSize,
@@ -101,19 +94,19 @@ class FlutterBadgeState extends State<FlutterBadge> {
       return widget.icon;
     }
 
-    RoundedRectangleBorder border = widget.itemCount < 10
+    RoundedRectangleBorder? border = widget.itemCount! < 10
         ? null
         : RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(widget.borderRadius));
     return Center(
       child: Stack(
-        overflow: Overflow.visible,
+        clipBehavior: Clip.none,
         children: [
           widget.icon,
           BadgePositioned(
             position: widget.position ?? BadgePosition.topRight(),
             child: Material(
-                type: widget.itemCount < 10
+                type: widget.itemCount! < 10
                     ? MaterialType.circle
                     : MaterialType.card,
                 elevation: 2.0,
